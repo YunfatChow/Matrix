@@ -33,6 +33,7 @@ public:
 	Matrix<ElemType> transpose();
 	bool NullRowCheck(int i);//检查第i行是否为零行
 	ElemType trace();//求迹
+	int rank();//求秩
 };
 template <typename ElemType>
 std::istream& operator>>(std::istream&, Matrix<ElemType>&);
@@ -385,6 +386,18 @@ Matrix<ElemType> Matrix<ElemType>::transpose()
 		}
 	}
 	return X;
+}
+template <typename ElemType>
+int Matrix<ElemType>::rank()
+{
+	Matrix A(*this);
+	A.down_em();
+	int r = 0;
+	for (int i = 0; i < min(m, n); i++)
+	{
+		if (element[i][i] != 0) r++;
+	}
+	return r;
 }
 
 template <typename ElemType>

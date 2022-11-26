@@ -444,6 +444,7 @@ Complex cos(const Complex& z)
 }
 ostream &operator<<(ostream &os, const Complex &z) //重载<<输出
 {
+    //double eps = 1e-14;
     if (z.real == 0 && z.imaginary == 0)
     {
         os << "0";
