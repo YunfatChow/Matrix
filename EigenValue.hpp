@@ -1,16 +1,16 @@
-#pragma once
+ï»¿#pragma once
 #include<iostream>
 #include<cmath>
 #include"Complex.hpp"
 #include"Matrix.hpp"
 using namespace std;
 
-//ÉùÃ÷
+//å£°æ˜
 Matrix<double> HessenBerg_Transformation(Matrix<double>);
 double* HessenMatQR(Matrix<double>, int, double);
 Complex* EigenValue(const Matrix<double>&);
 
-//¶¨Òå
+//å®šä¹‰
 Matrix<double> HessenBerg_Transformation(Matrix<double> A)
 {
 	if (A.m != A.n)
@@ -66,13 +66,13 @@ Matrix<double> HessenBerg_Transformation(Matrix<double> A)
 
 double* HessenMatQR(Matrix<double> A, int jt = 60, double eps = 1e-6)
 {
-	//AÎªHessenberg¾ØÕó
-	//jt Îª×î´óµü´ú´ÎÊı,epsÎª¾«¶È
+	//Aä¸ºHessenbergçŸ©é˜µ
+	//jt ä¸ºæœ€å¤§è¿­ä»£æ¬¡æ•°,epsä¸ºç²¾åº¦
 	int n = A.n;
-	int m, it, i, j, k, l;//mĞĞÊı,itÒÑ¾­µü´ú´ÎÊı
+	int m, it, i, j, k, l;//mè¡Œæ•°,itå·²ç»è¿­ä»£æ¬¡æ•°
 	double b, c, w, g, xy, p, q, r, x, s, e, f, z, y;
-	double* u = new double[n];//±£´æÊµ²¿
-	double* v = new double[n];//±£´æĞé²¿
+	double* u = new double[n];//ä¿å­˜å®éƒ¨
+	double* v = new double[n];//ä¿å­˜è™šéƒ¨
 	it = 0; m = n;
 	while (m > 0)
 	{
@@ -188,7 +188,7 @@ double* HessenMatQR(Matrix<double> A, int jt = 60, double eps = 1e-6)
 	{
 		uv[i] = u[i];
 		uv[i + n] = v[i];
-	}//0~n-1¸öÔªËØÎªÌØÕ÷ÖµµÄÊµ²¿,n~2n-1¸öÔªËØÎªÌØÕ÷ÖµµÄĞé²¿, ÌØÕ÷ÖµÎªuv[k]+uv[k+n]i
+	}//0~n-1ä¸ªå…ƒç´ ä¸ºç‰¹å¾å€¼çš„å®éƒ¨,n~2n-1ä¸ªå…ƒç´ ä¸ºç‰¹å¾å€¼çš„è™šéƒ¨, ç‰¹å¾å€¼ä¸ºuv[k]+uv[k+n]i
 	return uv;
 }
 
@@ -201,6 +201,6 @@ Complex* EigenValue(const Matrix<double>& A)
 	{
 		c[i] = Complex(p[i], p[i + A.n]);
 	}
-	if (p) delete p;//·ÀÖ¹ÄÚ´æĞ¹Â©
+	if (p) delete p;//é˜²æ­¢å†…å­˜æ³„æ¼
 	return c;
 }

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #ifndef Matrix_H_
 #define Matrix_H_
 //Matrix.h
@@ -13,17 +13,17 @@ class Matrix
 public:
 	int n, m;
 	ElemType** element;
-	Matrix(int = 0, int = 0, int = 0);//µÚÈı¸ö²ÎÊıÅĞ¶Ï³õÊ¼»¯ÀàĞÍ£¬0ÎªÁã¾ØÕó£¬1Îªµ¥Î»Õó
+	Matrix(int = 0, int = 0, int = 0);//ç¬¬ä¸‰ä¸ªå‚æ•°åˆ¤æ–­åˆå§‹åŒ–ç±»å‹ï¼Œ0ä¸ºé›¶çŸ©é˜µï¼Œ1ä¸ºå•ä½é˜µ
 	Matrix(const Matrix<ElemType>&);
 	~Matrix();
 	void Scan();
 	void Print();
-	void row_exchange(int, int);//ĞĞ½»»»
-	void row_add(int, int, ElemType);//¸øµÚiĞĞ¼ÓÉÏµÚjĞĞµÄk±¶
-	void row_multiply(int, ElemType);//ĞĞ³Ë·¨
-	void down_em(int = 0);//ÏòÏÂÏûÔª 
-	void up_em(int = -2);//ÏòÉÏÏûÔª
-	Matrix<ElemType> Augement(Matrix<ElemType>);//Ôö¹ã¾ØÕó
+	void row_exchange(int, int);//è¡Œäº¤æ¢
+	void row_add(int, int, ElemType);//ç»™ç¬¬iè¡ŒåŠ ä¸Šç¬¬jè¡Œçš„kå€
+	void row_multiply(int, ElemType);//è¡Œä¹˜æ³•
+	void down_em(int = 0);//å‘ä¸‹æ¶ˆå…ƒ 
+	void up_em(int = -2);//å‘ä¸Šæ¶ˆå…ƒ
+	Matrix<ElemType> Augement(Matrix<ElemType>);//å¢å¹¿çŸ©é˜µ
 	ElemType det();
 	ElemType& operator()(int, int);
 	Matrix<ElemType> operator+(const Matrix<ElemType>&) const;
@@ -31,8 +31,8 @@ public:
 	Matrix<ElemType> operator*(const Matrix<ElemType>&) const;
 	Matrix<ElemType> operator=(const Matrix<ElemType>&);
 	Matrix<ElemType> transpose();
-	bool NullRowCheck(int i);//¼ì²éµÚiĞĞÊÇ·ñÎªÁãĞĞ
-	ElemType trace();//Çó¼£
+	bool NullRowCheck(int i);//æ£€æŸ¥ç¬¬iè¡Œæ˜¯å¦ä¸ºé›¶è¡Œ
+	ElemType trace();//æ±‚è¿¹
 };
 template <typename ElemType>
 std::istream& operator>>(std::istream&, Matrix<ElemType>&);
@@ -44,7 +44,7 @@ typedef Matrix<double> RealMatrix;
 typedef Matrix<Complex> ComplexMatrix;
 
 //QR_Decomposition.h
-Matrix<double>* QR(const Matrix<double>&);//SÎªÊµ¾ØÕó
+Matrix<double>* QR(const Matrix<double>&);//Sä¸ºå®çŸ©é˜µ
 //--------------------------------------------------
 
 //Matrix.cpp
@@ -92,7 +92,7 @@ ElemType Matrix<ElemType>::det()
 {
 	if (n != m)
 	{
-		cout << "Ö»ÓĞ·½Õó²ÅÄÜÇóĞĞÁĞÊ½\n";
+		cout << "åªæœ‰æ–¹é˜µæ‰èƒ½æ±‚è¡Œåˆ—å¼\n";
 		return 0;
 	}
 	Matrix B = *this;
@@ -106,7 +106,7 @@ ElemType Matrix<ElemType>::trace()
 {
 	if (m != n)
 	{
-		cout << "Ö»ÓĞ·½Õó²ÅÓĞ¼£\n";
+		cout << "åªæœ‰æ–¹é˜µæ‰æœ‰è¿¹\n";
 		return 0;
 	}
 	ElemType t = 0;
@@ -141,7 +141,7 @@ void Matrix<ElemType>::Print()
 	cout << "\n";
 }
 template <typename ElemType>
-void Matrix<ElemType>::row_exchange(int i, int j)//½»»»µÚi£¬jĞĞ
+void Matrix<ElemType>::row_exchange(int i, int j)//äº¤æ¢ç¬¬iï¼Œjè¡Œ
 {
 	if (i<1 || i>m || j<1 || j>n)
 	{
@@ -156,7 +156,7 @@ void Matrix<ElemType>::row_exchange(int i, int j)//½»»»µÚi£¬jĞĞ
 	}
 }
 template <typename ElemType>
-void Matrix<ElemType>::row_add(int i, int j, ElemType k)//¸øµÚiĞĞ¼ÓÉÏk±¶µÄµÚjĞĞ
+void Matrix<ElemType>::row_add(int i, int j, ElemType k)//ç»™ç¬¬iè¡ŒåŠ ä¸Škå€çš„ç¬¬jè¡Œ
 {
 	if (i<1 || i>m || j<1 || j>n)
 	{
@@ -171,7 +171,7 @@ void Matrix<ElemType>::row_add(int i, int j, ElemType k)//¸øµÚiĞĞ¼ÓÉÏk±¶µÄµÚjĞĞ
 	}
 }
 template <typename ElemType>
-void Matrix<ElemType>::row_multiply(int i, ElemType k)//¸øµÚiĞĞÊı³Ëk
+void Matrix<ElemType>::row_multiply(int i, ElemType k)//ç»™ç¬¬iè¡Œæ•°ä¹˜k
 {
 	if (i<1 || i>m)
 	{
@@ -200,9 +200,9 @@ bool Matrix<ElemType>::NullRowCheck(int i)
 	return true;
 }
 template <typename ElemType>
-Matrix<ElemType> Matrix<ElemType>::Augement(Matrix<ElemType> B)//·µ»Ø[A|B]µÄÔö¹ã¾ØÕó
+Matrix<ElemType> Matrix<ElemType>::Augement(Matrix<ElemType> B)//è¿”å›[A|B]çš„å¢å¹¿çŸ©é˜µ
 {
-	if (m != B.m) return *this;//ĞĞÊı²»ÏàµÈ²»¿ÉÔö¹ã
+	if (m != B.m) return *this;//è¡Œæ•°ä¸ç›¸ç­‰ä¸å¯å¢å¹¿
 	Matrix<ElemType> C(m, B.n + n);
 	for (int i = 0; i < m; i++)
 	{
@@ -228,7 +228,7 @@ void Matrix<ElemType>::down_em(int r)
 		if (p >= m) return;
 		row_exchange(r + 1, p + 1);
 	}
-	for (int i = r + 1; i < m; i++)//ÓÃµÚrĞĞÏûÈ¥r+1ÖÁmĞĞµÄµÚr¸öÔªËØ
+	for (int i = r + 1; i < m; i++)//ç”¨ç¬¬rè¡Œæ¶ˆå»r+1è‡³mè¡Œçš„ç¬¬rä¸ªå…ƒç´ 
 	{
 		ElemType k = element[i][r] / element[r][r];
 		row_add(i + 1, r + 1, -k);
@@ -236,12 +236,12 @@ void Matrix<ElemType>::down_em(int r)
 	down_em(r + 1);
 }
 template <typename ElemType>
-void Matrix<ElemType>::up_em(int r)//Õë¶ÔÉÏÈı½Ç¾ØÕó 
+void Matrix<ElemType>::up_em(int r)//é’ˆå¯¹ä¸Šä¸‰è§’çŸ©é˜µ 
 {
-	if (r == -2) r = m - 1;//Ä¬ÈÏ²ÎÊı£¬´ÓµÚmĞĞ¿ªÊ¼ÏûÔª
-	if (r <= 0) return;//r==0 ÏûÔªÖÁµÚÒ»ĞĞ
+	if (r == -2) r = m - 1;//é»˜è®¤å‚æ•°ï¼Œä»ç¬¬mè¡Œå¼€å§‹æ¶ˆå…ƒ
+	if (r <= 0) return;//r==0 æ¶ˆå…ƒè‡³ç¬¬ä¸€è¡Œ
 	while (element[r][r] == 0) r--;
-	for (int i = 0; i <= r - 1; i++)//ÓÃµÚrĞĞÏûÈ¥µÚ1ÖÁr-1ĞĞµÄµÚr¸öÔªËØ
+	for (int i = 0; i <= r - 1; i++)//ç”¨ç¬¬rè¡Œæ¶ˆå»ç¬¬1è‡³r-1è¡Œçš„ç¬¬rä¸ªå…ƒç´ 
 	{
 		ElemType k = element[i][r] / element[r][r];
 		row_add(i + 1, r + 1, -k);
@@ -253,7 +253,7 @@ Matrix<ElemType> inverse(Matrix<ElemType> A)
 {
 	if (A.m != A.n)
 	{
-		cout << "Ö»ÓĞ·½Õó²Å´æÔÚÄæ¾ØÕó\n";
+		cout << "åªæœ‰æ–¹é˜µæ‰å­˜åœ¨é€†çŸ©é˜µ\n";
 		return A;
 	}
 	Matrix<ElemType> B(A.m, A.n, 1);
@@ -263,8 +263,8 @@ Matrix<ElemType> inverse(Matrix<ElemType> A)
 	{
 		if (A.element[i][i] == 0)
 		{
-			cout << "¾ØÕóA²»¿ÉÄæ\n";
-			return B;//·µ»ØÖµÎªµ¥Î»Õó
+			cout << "çŸ©é˜µAä¸å¯é€†\n";
+			return B;//è¿”å›å€¼ä¸ºå•ä½é˜µ
 		}
 	}
 	A.up_em();
@@ -272,7 +272,7 @@ Matrix<ElemType> inverse(Matrix<ElemType> A)
 	{
 		for (int j = 0; j < B.n; j++)
 		{
-			B.element[i][j] = A.element[i][j + B.n] / A.element[i][i];//È¡³öÏûÔªºóµÄ¾ØÕóB²¢µ¥Î»»¯A 
+			B.element[i][j] = A.element[i][j + B.n] / A.element[i][i];//å–å‡ºæ¶ˆå…ƒåçš„çŸ©é˜µBå¹¶å•ä½åŒ–A 
 		}
 	}
 	return B;
@@ -283,7 +283,7 @@ Matrix<ElemType> Matrix<ElemType>::operator+(const Matrix<ElemType>& B) const
 	Matrix<ElemType> C(m, n, 0);
 	if (n != B.n || m != B.m)
 	{
-		cout << "¾ØÕó²»Í¬ĞÍ²»¿ÉÏà¼Ó\n";
+		cout << "çŸ©é˜µä¸åŒå‹ä¸å¯ç›¸åŠ \n";
 		return C;
 	}
 	for (int i = 0; i < m; i++)
@@ -302,7 +302,7 @@ Matrix<ElemType> Matrix<ElemType>::operator-(const Matrix<ElemType>& B)const
 	Matrix C(m, n, 0);
 	if (n != B.n || m != B.m)
 	{
-		cout << "¾ØÕó²»Í¬ĞÍ²»¿ÉÏà¼õ\n";
+		cout << "çŸ©é˜µä¸åŒå‹ä¸å¯ç›¸å‡\n";
 		return C;
 	}
 	for (int i = 0; i < m; i++)
@@ -318,10 +318,10 @@ Matrix<ElemType> Matrix<ElemType>::operator-(const Matrix<ElemType>& B)const
 template <typename ElemType>
 Matrix<ElemType> Matrix<ElemType>::operator*(const Matrix<ElemType>& B) const
 {
-	Matrix<ElemType> C(m, B.n, 0);//C³õÊ¼»¯ÎªÁã¾ØÕó 
+	Matrix<ElemType> C(m, B.n, 0);//Cåˆå§‹åŒ–ä¸ºé›¶çŸ©é˜µ 
 	if (n != B.m)
 	{
-		std::cout << "¸Ã³Ë·¨²»ºÏ·¨\n";
+		std::cout << "è¯¥ä¹˜æ³•ä¸åˆæ³•\n";
 		return C;
 	}
 	for (int i = 0; i < m; i++)
@@ -417,9 +417,9 @@ void SolveEquation(Matrix<ElemType> A)
 		if (A.element[i][i] != 0) A.row_multiply(i, 1 / A.element[i][i]);
 	}
 	int j = A.m;
-	for (int i = 0; i < A.m && i < j; i++)//½«ÁãĞĞÒÆµ½×îÏÂ·½ 
+	for (int i = 0; i < A.m && i < j; i++)//å°†é›¶è¡Œç§»åˆ°æœ€ä¸‹æ–¹ 
 	{
-		if (A.NullRowCheck(i))//µÚiĞĞÎªÁãĞĞ 
+		if (A.NullRowCheck(i))//ç¬¬iè¡Œä¸ºé›¶è¡Œ 
 		{
 			A.row_exchange(i, j);
 			j--;
@@ -427,7 +427,7 @@ void SolveEquation(Matrix<ElemType> A)
 	}
 	A.Print();
 }
-//ÏÔÊ½ÊµÀı»¯
+//æ˜¾å¼å®ä¾‹åŒ–
 template std::istream& operator>>(std::istream&, Matrix<double>&);
 template std::ostream& operator<<(std::ostream&, const Matrix<double>&);
 
@@ -437,11 +437,11 @@ template class Matrix<double>;
 template class Matrix<Complex>;
 
 //QR_Decomposition.cpp
-Matrix<double>* QR(const Matrix<double>& S)//SÎªÊµ¾ØÕó
+Matrix<double>* QR(const Matrix<double>& S)//Sä¸ºå®çŸ©é˜µ
 {
 	int m = S.m;
 	int n = S.n;
-	Matrix<double> Q(m, m, 1);//³õÊ¼»¯QÎªµ¥Î»Õó
+	Matrix<double> Q(m, m, 1);//åˆå§‹åŒ–Qä¸ºå•ä½é˜µ
 	Matrix<double> A(S);
 	int i, j, k, nn, jj;
 	double u, alpha, w, t;

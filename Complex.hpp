@@ -1,6 +1,5 @@
-#pragma once
-#ifndef Complex_H_
-#define Complex_H_
+ï»¿#pragma once
+
 // Complex.h
 #include <iostream>
 #include <fstream>
@@ -12,7 +11,7 @@ class Complex
 public:
     double real, imaginary;
     Complex();
-    Complex(int); //¹¹Ôìº¯ÊıÃÇ
+    Complex(int); //æ„é€ å‡½æ•°ä»¬
     Complex(float);
     Complex(double);
     Complex(int, int);
@@ -53,7 +52,7 @@ public:
     bool operator!=(const Complex &) const;
 
     template <typename T>
-    Complex operator+(const T &) const; // TÄ£°åÖØÔØint float double
+    Complex operator+(const T &) const; // Tæ¨¡æ¿é‡è½½int float double
     template <typename T>
     Complex operator-(const T &) const;
     template <typename T>
@@ -88,15 +87,18 @@ Complex operator*(const T &, Complex);
 template <typename T>
 Complex operator/(const T &, Complex);
 
-Complex pow(const Complex &, int n);   //ÕûÊı´ÎÃİ
-Complex pow(const Complex &, float p); //ÊµÊı´ÎÃİ
+Complex pow(const Complex &, int n);   //æ•´æ•°æ¬¡å¹‚
+Complex pow(const Complex &, float p); //å®æ•°æ¬¡å¹‚
 Complex pow(const Complex &, double p);
-Complex *ntrt(const Complex &, int n); // n´Î·½¸ù
-
+Complex *ntrt(const Complex &, int n); // næ¬¡æ–¹æ ¹
+Complex exp(const Complex &);//å¤æ•°æŒ‡æ•°
+Complex log(const Complex &, float e = M_E);//å¤æ•°çš„è‡ªç„¶å¯¹æ•°,é»˜è®¤åº•æ•°ä¸ºe
+Complex sin(const Complex&);//æ­£å¼¦
+Complex cos(const Complex&);//ä½™å¼¦
 // Complex.cpp
 Complex::Complex() : real(0), imaginary(0){};
-Complex::Complex(int x) : real(x), imaginary(0){};   //¹¹Ôìº¯ÊıÃÇ
-Complex::Complex(float x) : real(x), imaginary(0){}; //ºóÃæ²»ÄÜ´øÄ¬ÈÏ²ÎÊı£¬·ñÔò»á³öÏÖ¶àÒåĞÔ
+Complex::Complex(int x) : real(x), imaginary(0){};   //æ„é€ å‡½æ•°ä»¬
+Complex::Complex(float x) : real(x), imaginary(0){}; //åé¢ä¸èƒ½å¸¦é»˜è®¤å‚æ•°ï¼Œå¦åˆ™ä¼šå‡ºç°å¤šä¹‰æ€§
 Complex::Complex(double x) : real(x), imaginary(0){};
 Complex::Complex(int x, int y) : real(x), imaginary(y){};
 Complex::Complex(int x, float y) : real(x), imaginary(y){};
@@ -334,13 +336,13 @@ Complex &Complex::operator=(const T &x)
 }
 
 template <typename T>
-bool Complex::operator==(const T &x) const //ÅĞ¶ÏÊµÊı
+bool Complex::operator==(const T &x) const //åˆ¤æ–­å®æ•°
 {
     return (imaginary == 0) && (real == x);
 }
 
 template <typename T>
-bool Complex::operator!=(const T &x) const //ÅĞ¶Ï²»µÈÓÚÊµÊı
+bool Complex::operator!=(const T &x) const //åˆ¤æ–­ä¸ç­‰äºå®æ•°
 {
     return (imaginary != 0) || (real != x);
 }
@@ -423,7 +425,24 @@ Complex *ntrt(const Complex &z, int n)
     }
     return p;
 }
-ostream &operator<<(ostream &os, const Complex &z) //ÖØÔØ<<Êä³ö
+Complex exp(const Complex &z)
+{
+    double r = exp(z.real);
+    return Complex(r * cos(z.imaginary), r * sin(z.imaginary));
+}
+Complex log(const Complex &z, float e)
+{
+    return Complex(log(z.Norm()) / log(e), z.arg() / log(e));
+}
+Complex sin(const Complex& z)
+{
+    return Complex(sin(z.real) * cosh(z.imaginary), cos(z.real) * sinh(z.imaginary));
+}
+Complex cos(const Complex& z)
+{
+    return Complex(cos(z.real) * cosh(z.imaginary), -sin(z.real) * sinh(z.imaginary));
+}
+ostream &operator<<(ostream &os, const Complex &z) //é‡è½½<<è¾“å‡º
 {
     if (z.real == 0 && z.imaginary == 0)
     {
@@ -446,7 +465,7 @@ ostream &operator<<(ostream &os, const Complex &z) //ÖØÔØ<<Êä³ö
     }
     return os;
 }
-istream &operator>>(istream &is, Complex &z) //ÖØÔØ>>ÊäÈë£¬ÒªÇó¸ñÊ½Îª a+bi (a¿ÉÒÔÎª0£¬b¿ÉÒÔÎª1)
+istream &operator>>(istream &is, Complex &z) //é‡è½½>>è¾“å…¥ï¼Œè¦æ±‚æ ¼å¼ä¸º a+bi (aå¯ä»¥ä¸º0ï¼Œbå¯ä»¥ä¸º1)
 {
     string s;
     char c;
@@ -458,15 +477,15 @@ istream &operator>>(istream &is, Complex &z) //ÖØÔØ>>ÊäÈë£¬ÒªÇó¸ñÊ½Îª a+bi (a¿ÉÒ
         s += c;
         c = is.get();
     }
-    int pos = int(s.find('i')); //ÅĞ¶ÏiÊÇ·ñ´æÔÚ
-    if (pos == s.npos)          //²»´æÔÚi,¼´Îª´¿ÊµÊı
+    int pos = int(s.find('i')); //åˆ¤æ–­iæ˜¯å¦å­˜åœ¨
+    if (pos == s.npos)          //ä¸å­˜åœ¨i,å³ä¸ºçº¯å®æ•°
     {
         z.real = stod(s);
         z.imaginary = 0;
         return is;
     }
-    //´æÔÚi£¬ÊäÈëÖĞ´æÔÚĞé²¿ (i±ØĞëĞ´ÔÚĞé²¿µÄ½áÎ²)
-    int sgnpos = 0; //ÕÒµ½Ğé²¿Ç°·ûºÅÎ»ÖÃ
+    //å­˜åœ¨iï¼Œè¾“å…¥ä¸­å­˜åœ¨è™šéƒ¨ (iå¿…é¡»å†™åœ¨è™šéƒ¨çš„ç»“å°¾)
+    int sgnpos = 0; //æ‰¾åˆ°è™šéƒ¨å‰ç¬¦å·ä½ç½®
     int sgn = 0;
     for (int i = 1; i < s.size(); i++)
     {
@@ -481,18 +500,18 @@ istream &operator>>(istream &is, Complex &z) //ÖØÔØ>>ÊäÈë£¬ÒªÇó¸ñÊ½Îª a+bi (a¿ÉÒ
             sgn = -1;
         }
     }
-    if (sgnpos == 0) //µÚ¶şÎ»ÆğÃ»ÓĞ·¢ÏÖ·ûºÅ£¬ÔòÎª´¿ĞéÊı¿½
+    if (sgnpos == 0) //ç¬¬äºŒä½èµ·æ²¡æœ‰å‘ç°ç¬¦å·ï¼Œåˆ™ä¸ºçº¯è™šæ•°æ‹·
     {
-        if (s[0] == '-') //Ê×Î»Îª¸ººÅ
+        if (s[0] == '-') //é¦–ä½ä¸ºè´Ÿå·
         {
-            if (s[1] == 'i') //ÊäÈëÁË-i
+            if (s[1] == 'i') //è¾“å…¥äº†-i
             {
                 z.imaginary = -1;
             }
             else
-                z.imaginary = -stod(s.substr(1)); //´ÓµÚ1Î»¿ªÊ¼»ñÈ¡Êı×Ö
+                z.imaginary = -stod(s.substr(1)); //ä»ç¬¬1ä½å¼€å§‹è·å–æ•°å­—
         }
-        else if (s[0] == 'i') //µ¥¸ö×Ö·ûi ¼´Ö»ÊäÈëÁËi
+        else if (s[0] == 'i') //å•ä¸ªå­—ç¬¦i å³åªè¾“å…¥äº†i
         {
             z.imaginary = 1;
         }
@@ -500,12 +519,12 @@ istream &operator>>(istream &is, Complex &z) //ÖØÔØ>>ÊäÈë£¬ÒªÇó¸ñÊ½Îª a+bi (a¿ÉÒ
         {
             z.imaginary = stod(s);
         }
-        z.real = 0; //Êµ²¿Îª0
+        z.real = 0; //å®éƒ¨ä¸º0
     }
     else
     {
         z.real = stod(s.substr(0, sgnpos));
-        if (s[sgnpos + 1] == 'i') //·ûºÅÎ»ºóÊÇi£¬ÔòĞé²¿ÏµÊıÎª1£¬³ËÉÏ·ûºÅ
+        if (s[sgnpos + 1] == 'i') //ç¬¦å·ä½åæ˜¯iï¼Œåˆ™è™šéƒ¨ç³»æ•°ä¸º1ï¼Œä¹˜ä¸Šç¬¦å·
         {
             z.imaginary = sgn;
         }
@@ -515,7 +534,7 @@ istream &operator>>(istream &is, Complex &z) //ÖØÔØ>>ÊäÈë£¬ÒªÇó¸ñÊ½Îª a+bi (a¿ÉÒ
     return is;
 }
 
-template Complex Complex::operator+(const int &) const; //ÏÔÊ½ÊµÀı»¯ T=int
+template Complex Complex::operator+(const int &) const; //æ˜¾å¼å®ä¾‹åŒ– T=int
 template Complex Complex::operator-(const int &) const;
 template Complex Complex::operator*(const int &) const;
 template Complex Complex::operator/(const int &) const;
@@ -532,7 +551,7 @@ template Complex operator-(const int &, Complex);
 template Complex operator*(const int &, Complex);
 template Complex operator/(const int &, Complex);
 
-template Complex Complex::operator+(const float &) const; //ÏÔÊ½ÊµÀı»¯ T=float
+template Complex Complex::operator+(const float &) const; //æ˜¾å¼å®ä¾‹åŒ– T=float
 template Complex Complex::operator-(const float &) const;
 template Complex Complex::operator*(const float &) const;
 template Complex Complex::operator/(const float &) const;
@@ -548,7 +567,7 @@ template Complex operator-(const float &, Complex);
 template Complex operator*(const float &, Complex);
 template Complex operator/(const float &, Complex);
 
-template Complex Complex::operator+(const double &) const; //ÏÔÊ½ÊµÀı»¯ T=double
+template Complex Complex::operator+(const double &) const; //æ˜¾å¼å®ä¾‹åŒ– T=double
 template Complex Complex::operator-(const double &) const;
 template Complex Complex::operator*(const double &) const;
 template Complex Complex::operator/(const double &) const;
@@ -560,9 +579,8 @@ template Complex &Complex::operator=(const double &);
 template bool Complex::operator==(const double &) const;
 template bool Complex::operator!=(const double &) const;
 
-template Complex operator+(const double &, Complex); //ÏÔÊ½ÊµÀı»¯
+template Complex operator+(const double &, Complex); //æ˜¾å¼å®ä¾‹åŒ–
 template Complex operator-(const double &, Complex);
 template Complex operator*(const double &, Complex);
 template Complex operator/(const double &, Complex);
 
-#endif
