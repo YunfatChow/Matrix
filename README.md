@@ -12,6 +12,7 @@ function:
 
 - tranpose
 - trace
+- rank
 - determinate
 - SolveEquation
 - istream >> & ostream <<
@@ -21,11 +22,17 @@ function:
 Complex number
 
 - fundamental **algebraic operations** + - * /
-
 - **conjugate**
+- Norm()
 - equal (==) & not equal (!=)
-
-- istream >> & ostream <<
+- sin() & cos()
+- exp()
+- pow(z,p)  or  z^p
+- ntrt() ------**the nth root**
+- log()
+- sinh() & cosh()
+- ostream <<  -------output form is “a+bi”
+- istream >> --------inputform is “a+bi”
 
 ## EigenValue.hpp
 

@@ -95,6 +95,8 @@ Complex exp(const Complex &);//复数指数
 Complex log(const Complex &, float e = M_E);//复数的自然对数,默认底数为e
 Complex sin(const Complex&);//正弦
 Complex cos(const Complex&);//余弦
+Complex sinh(const Complex&);//双曲正弦(依赖于Complex sin())
+Complex cosh(const Complex&);//双曲余弦(依赖于Complex cos())
 // Complex.cpp
 Complex::Complex() : real(0), imaginary(0){};
 Complex::Complex(int x) : real(x), imaginary(0){};   //构造函数们
@@ -441,6 +443,15 @@ Complex sin(const Complex& z)
 Complex cos(const Complex& z)
 {
     return Complex(cos(z.real) * cosh(z.imaginary), -sin(z.real) * sinh(z.imaginary));
+}
+Complex sinh(const Complex& z)// sinh(z) = -i sin(iz)
+{
+    Complex t = sin(Complex(-z.imaginary, z.real));//sin(iz)
+    return Complex(t.imaginary, -t.real);
+}
+Complex cosh(const Complex& z)// cosh(z) = cos(iz)
+{
+    return cos(Complex(-z.imaginary, z.real));
 }
 ostream &operator<<(ostream &os, const Complex &z) //重载<<输出
 {
